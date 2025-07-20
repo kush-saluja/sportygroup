@@ -1,0 +1,56 @@
+{
+  "EVENT_TYPE_TRANSFORMER": [
+    {
+      "operation": "shift",
+      "spec": {
+        "msg_type": {
+          "odds_update": {
+            "#ODDS_CHANGE": "eventType"
+          },
+          "settlement": {
+            "#BET_SETTLEMENT": "eventType"
+          }
+        }
+      }
+    }
+  ],
+  "ODDS_CHANGE_TRANSFORMER": [
+    {
+      "operation": "shift",
+      "spec": {
+        "event_id": "eventId",
+        "values": {
+          "1": "odds.HOME",
+          "X": "odds.DRAW",
+          "2": "odds.AWAY"
+        }
+      }
+    }
+  ],
+  "BET_SETTLEMENT_TRANSFORMER": [
+    {
+      "operation": "shift",
+      "spec": {
+        "event_id": "eventId",
+        "outcome": "outcomeKey"
+      }
+    },
+    {
+      "operation": "shift",
+      "spec": {
+        "outcomeKey": {
+          "1": {
+            "#HOME": "outcome"
+          },
+          "X": {
+            "#DRAW": "outcome"
+          },
+          "2": {
+            "#AWAY": "outcome"
+          }
+        },
+        "*": "&"
+      }
+    }
+  ]
+}
